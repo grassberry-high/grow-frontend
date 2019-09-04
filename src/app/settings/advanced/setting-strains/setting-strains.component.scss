@@ -1,0 +1,11 @@
+@import '~src/app/settings/settings.scss';
+
+article:nth-last-of-type(1) {
+  hr {
+    display: none;
+  }
+
+  fieldset {
+    padding-bottom: 2rem;
+  }
+}

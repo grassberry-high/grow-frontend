@@ -1,0 +1,84 @@
+<!-- SENSOR CHARTS -->
+<!--<div style="width:75%;">-->
+<!--<h2>Canvas</h2>-->
+<!--<canvas id="canvas"></canvas>-->
+<!--</div>-->
+<!--<div style="width:75%;">-->
+<!--<h2>NGX</h2>-->
+<!--<ngx-chartjs [data]="config.data" [type]="config.type" [options]="config.options" [width]="'800'" [height]="'500'"></ngx-chartjs>-->
+<!--</div>-->
+
+<article class="chart" *ngIf="activeSensors && activeSensors.length > 0">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <h2 class="text-uppercase">Sensors</h2>
+      <label>Live Stream</label>
+      <input id="livestream" class="tgl tgl-light" type="checkbox" [formControl]="stream">
+      <label for="livestream" class="tgl-btn"></label>
+    </div>
+  </div>
+
+
+  <div *ngFor="let chart of charts | keyvalue; let index = index">
+    <div class="chart-loading row"
+         *ngIf="(!chart.value.data || !chart.value.data.datasets[0] || !chart.value.data.datasets[0].data || chart.value.data.datasets[0].data.length === 0) && chart.value.series">
+      <div class="col-xs-12 col-sm-12 col-sm-12 col-md-8 text-center">
+        <p>Chart {{chart.value.series.join(', ')}} will appear soon.</p>
+        <!--<md-progress-linear md-mode="indeterminate"></md-progress-linear>-->
+      </div>
+    </div>
+    <div class="row"
+         *ngIf="chart.value.data && chart.value.data.datasets[0] && chart.value.data.datasets[0].data && chart.value.data.datasets[0].data.length > 0">
+      <div class="col-xs-12 col-sm-12 col-sm-12 col-md-8">
+        <div class="sensor-chart">
+          <pre *ngIf="developmentMode">{{ chart.value.data | json }}</pre>
+          <ngx-chartjs [data]="chart.value.data" [type]="'line'" [width]="'1600'" [height]="'800'"
+                       [options]="chart.value.options"></ngx-chartjs>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-sm-12 col-md-4">
+        <div class="sensor">
+          <div class="detector" *ngFor="let series of chart.value.series; let index = index">
+            <label>{{series}}</label>
+            <p>
+              <fa-icon container="body" icon="thermometer-half"
+                       *ngIf="chart.value.detectorTypes[index]==='temperature'"></fa-icon>
+              <fa-icon container="body" icon="percent" *ngIf="chart.value.detectorTypes[index]==='humidity'"></fa-icon>
+              <fa-icon container="body" icon="tint" *ngIf="chart.value.detectorTypes[index]==='water'"></fa-icon>
+              <fa-icon container="body" icon="gas-pump" *ngIf="chart.value.detectorTypes[index]==='co2'">ppm</fa-icon>
+              <span> {{(chart.value.data.datasets[index].data | last).y | number:'0.0-2' | sensor: chart.value.detectorTypes[index] }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-8 text-center time-setting">
+        <div class="btn-group">
+          <label class="btn btn-time btn-dark-ice" ng-model="chart.value.timeUnit"
+                 (click)="updateSensorTimeUnit(chart, 'seconds')" uib-btn-radio>Seconds</label>
+          <label class="btn btn-time btn-dark-ice" ng-model="chart.value.timeUnit"
+                 (click)="updateSensorTimeUnit(chart, 'minutes')" uib-btn-radio>Minutes</label>
+          <label class="btn btn-time btn-dark-ice" ng-model="chart.value.timeUnit"
+                 (click)="updateSensorTimeUnit(chart, 'hours')" uib-btn-radio>Hours</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="showExport(charts)">
+    <div class="col-xs-12 col-sm-12 col-md-8">
+      <h2 class="text-uppercase">EXPORT</h2>
+      <p>Export your charts into CSV format.</p>
+      <div class="row" *ngIf="charts">
+        <div class="col-xs-12 col-sm-12">
+          <a class="clickable" (click)="exportChartGetFile(chamberName, charts)">Export: {{chamberName}}</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</article>
+

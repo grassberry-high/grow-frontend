@@ -1,0 +1,7 @@
+<small><em>Current light on/off percentage</em></small>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div *ngFor="let bar of bars" class="part" [ngClass]="bar.type" [style.width]="bar.value + '%'"><span *ngIf="bar.value > 5">{{bar.type}}</span><span>&nbsp;</span></div>
+  </div>
+</div>
+

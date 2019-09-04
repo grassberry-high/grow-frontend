@@ -1,0 +1,11 @@
+@import '~src/app/styles/_load_order.scss';
+@import '~src/app/settings/settings.scss';
+
+.advanced {
+  .remove {
+    float: left;
+    color: red;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+}

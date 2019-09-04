@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="form-group required col-xs-6 col-sm-6">
+    <label class="control-label">Sensor</label>
+    <select class="form-control" [ngClass]="class" [name]="nameSelector" [formControl]="selectedDetector">
+      <option *ngFor="let detector of detectors" [ngValue]="detector">{{detector.label}}</option>
+    </select>
+  </div>
+
+  <div class="form-group col-xs-6 col-sm-6" *ngIf="selectedDetector.value">
+    <label>Rename Sensor</label>
+    <input type="text" class="form-control" [ngClass]="class" name="sensor-name" [formControl]="detectorName"
+           placeholder="e.g. Tempsensor (Top)"
+           (keyup)="debouncedRename(this.selectedDetector.value.detectorId, this.detectorName.value)"/>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+@import '~src/app/styles/_load_order.scss';
+
+.remove {
+  float: left;
+  color: red;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+fieldset {
+  padding: 2rem 1rem;
+  padding-bottom: 0;
+  background: aliceblue;
+
+  hr {
+    border-top: 5px solid white;
+    margin-bottom: 0;
+    margin-left: -1rem;
+    width: 110%;
+  }
+
+  &.light-orange {
+    background: $light-orange;
+  }
+
+  &.light-green {
+    background: $light-green;
+  }
+
+  &.lighter-grey {
+    background: $lighter-grey;
+  }
+
+  &.light-pink {
+    background: $light-pink;
+  }
+}

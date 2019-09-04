@@ -1,0 +1,43 @@
+<form [formGroup]="regionForm">
+  <section class="container bg-white round-card">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Time Settings</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group required col-lg-4">
+        <label class="control-label">Region</label>
+        <select class="form-control" name="time-region" formControlName="region">
+          <option *ngFor="let regionOption of regionOptions" [ngValue]="regionOption">{{regionOption}}</option>
+        </select>
+      </div>
+
+      <div class="form-group required col-lg-4">
+        <label class="control-label">Timezone</label>
+        <select class="form-control" name="time-zone" formControlName="timeZone">
+          <option *ngFor="let timeZone of regionTimezoneOptions" [ngValue]="timeZone.value">{{timeZone.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group required col-lg-3">
+        <label class="control-label">Date & Time</label>
+        <input formControlName="dateTime" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Start Time"
+               class="form-control">
+        <owl-date-time #dt1></owl-date-time>
+        <app-err-msg [name]="'dateTime'" [form]="regionForm" [errMsg]="'Please specify the date & time.'"></app-err-msg>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-dark-ice" [disabled]="buttonDisabled == true" (click)="configureDateTime()">Set Timezone,
+          Date and Time
+        </button>
+      </div>
+    </div>
+  </section>
+</form>
+

@@ -1,0 +1,27 @@
+@import '~src/app/styles/_load_order.scss';
+
+section, h2 {
+  margin-top: 0;
+}
+
+.modal-header, .modal-body {
+  display: block;
+}
+
+@media screen and (max-width: $screen-lg) {
+  .modal-dialog {
+    max-width: 750px;
+  }
+}
+
+@media screen and (max-width: $screen-md) {
+  .modal-dialog {
+    max-width: 650px;
+  }
+}
+
+@media screen and (max-width: $screen-sm) {
+  .modal-dialog {
+    max-width: 500px;
+  }
+}

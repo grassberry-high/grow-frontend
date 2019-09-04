@@ -1,0 +1,14 @@
+<div class="check-box">
+  <div class="btn-group hidden-xs hidden-sm" [ngClass]=" inline ? 'display-inline': null ">
+    <label class="btn btn-checkbox" [ngClass]=" ngModel === false ? 'btn-danger active' : 'btn-default' "
+           (click)="make(false)" [title]="titleNo">{{titleNo}}</label>
+    <label class="btn btn-checkbox" [ngClass]=" ngModel === true ? 'btn-success active': 'btn-default' "
+           (click)="make(true)" [title]="titleYes">{{titleYes}}</label>
+  </div>
+  <div class="btn-group hidden-md hidden-lg" [ngClass]=" inline ? 'display-inline': null ">
+    <label class="btn btn-checkbox" [ngClass]=" ngModel === true ? 'btn-success active': 'btn-default' "
+           (click)="make(true)" [title]="titleYes">{{titleYes}}</label>
+    <label class="btn btn-checkbox" [ngClass]=" ngModel === false ? 'btn-danger active' : 'btn-default' "
+           (click)="make(false)" [title]="titleNo">{{titleNo}}</label>
+  </div>
+</div>

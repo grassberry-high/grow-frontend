@@ -1,0 +1,25 @@
+<section class="container bg-white round-card">
+  <form [formGroup]="unitsForm">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Unit Settings</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group required col-lg-4" show-errors>
+        <label class="control-label">Temperature</label>
+        <select class="form-control" name="temperature" formControlName="temperature">
+          <option *ngFor="let temperature of unitOptions.temperature"
+                  [value]="temperature.key">{{ temperature.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-dark-ice" [disabled]="buttonDisabled == true" (click)="configureUnits()">Set Units
+        </button>
+      </div>
+    </div>
+  </form>
+</section>

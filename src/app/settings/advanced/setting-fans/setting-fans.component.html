@@ -1,0 +1,17 @@
+<section class="controllers container-fluid">
+  <div class="row">
+    <div class="col-lg-4">
+      <h3>Fan</h3>
+    </div>
+  </div>
+  <article class="row" [hidden]="filterDetectors(['co2', 'temperature', 'humidity']).length > 0">
+    <div class="col-xs-12 col-sm-12 light-pink">
+      <fieldset class="no-sensor">
+        <p><strong>No co2, temperature, humidty sensors have been detected. Please assure that all sensors are plugged
+          in correctly.</strong></p>
+      </fieldset>
+    </div>
+  </article>
+  <app-input-rule [chamberForm]="chamberForm" [ruleDevice]="'fan'"
+                  placeholder="'e.g. Air circulation (Left)'"></app-input-rule>
+</section>

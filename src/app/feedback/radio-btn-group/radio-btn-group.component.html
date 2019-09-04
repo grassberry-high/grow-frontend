@@ -1,0 +1,24 @@
+<div class="row radio-btn-group">
+  <div class="form-group col-lg-12" ng-class="class">
+    <label *ngIf="label != null && label != ''">{{label}}:</label>
+    <br *ngIf="break=='true'"/>
+
+    <form *ngIf="form" [formGroup]="form">
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="mood" [formControlName]="name">
+        <label ngbButtonLabel class="btn-primary" [ngClass]="{ 'selected': form.get(name).value === radioOption.value }"
+               *ngFor="let radioOption of radioOptions | keyvalue">
+          <input ngbButton type="radio" [value]="radioOption.key"> {{radioOption.value}}
+        </label>
+      </div>
+    </form>
+
+    <!--<div *ngIf="otherInput != null && otherInput != '' && otherInline != null" class="other-inline">-->
+    <!--<input type="text" class="form-control" name="other" formControlName="model" placeholder="{{otherInput}}"/>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div *ngIf="otherInput != null && otherInput != '' && otherInline == null" class="form-group other-input col-lg-4" ng-class="{'indent-other':(label != null && label != '')}">-->
+    <!--<input type="text" class="form-control" name="other" formControlName="model" placeholder="{{otherInput}}"/>-->
+    <!--</div>-->
+    <hr/>
+  </div>
+</div>

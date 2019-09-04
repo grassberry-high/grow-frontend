@@ -1,0 +1,43 @@
+<section class="container bg-white round-card">
+  <form [formGroup]="wifiForm">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Connect Your Grassberry to Your Wifi</h3>
+        <p>Connecting your Grassberry to your local Wifi makes the url <strong>grassberry.local</strong> accessible to
+          all devices within this wifi network. This will disable the current hotspot.</p>
+        <em>Your Grassberry is secured through a firewall.</em>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group required col-lg-4" show-errors>
+        <label class="control-label clickable" (click)="toggleShowManualWifi()">Wifi Name</label>
+        <select *ngIf="!showManualWifi" class="form-control" name="wifi-name" formControlName="name">
+          <option *ngFor="let wifiOption of wifiOptions" [ngValue]="wifiOption">{{wifiOption}}</option>
+        </select>
+        <input *ngIf="showManualWifi" type="text" class="form-control" name="wifi-name" formControlName="name"
+               placeholder="Wifi Name" required/>
+        <p class="help-block" ng-if="configDataForm.wifiName.$error">Please enter your wifi name (ssid).</p>
+      </div>
+
+      <div class="form-group required col-lg-4">
+        <label class="control-label">Wifi Password</label>
+        <input type="{{inputType}}" class="form-control" name="wifi-pass" formControlName="pass"
+               placeholder="Wifi Password"/>
+        <p class="help-block" ng-if="configDataForm.wifiPass.$error">Please enter your wifi pass.</p>
+      </div>
+
+      <div class="form-group col-lg-4">
+        <br/>
+        <label>Show Password &nbsp;</label>
+        <input type="checkbox" (click)="toggleShowPassword()">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-dark-ice" [disabled]="buttonDisabled == true" (click)="configureWifi()">Setup Wifi
+        </button>
+      </div>
+    </div>
+  </form>
+</section>

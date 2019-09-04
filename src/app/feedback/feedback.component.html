@@ -1,0 +1,75 @@
+<div class="bg-ultralight-grey">
+  <div class="feedback">
+    <!--<flash-message class="flash-message"></flash-message>-->
+    <!-- SECTION 1 -->
+    <main class="container container-last bg-transparent-white">
+      <div class="row">
+        <div class="col-xs-12">
+          <article>
+            <form [formGroup]="feedbackForm">
+              <h1>Help us</h1>
+              <p>And we will build a better version for you.</p>
+              <p>Also you get extra lifetime for your Grassberry High.</p>
+              <p><a routerLink="root.subscribe">You can also support the project via subscription.</a></p>
+
+              <h2>Rewards * **</h2>
+              <ul>
+                <li><strong>We increase your lifetime up to 3 month for a blog post.</strong></li>
+                <li><strong>Make a quality grow report in a forum and we will increase your lifetime during that
+                  time.</strong></li>
+                <li><strong>We increase your life time up to 1 week for useful feedback.</strong></li>
+                <li>You can help in another way, tell us and leave some contact details.</li>
+              </ul>
+
+
+              <h3>Be precise, include some meta like, where, what is the issue, when did it occur etc.</h3>
+              <div class="row">
+                <div class="form-group col-lg-4">
+                  <label>Type</label>
+                  <select class="form-control" name="type" formControlName="type">
+                    <option *ngFor="let typeOption of typeOptions" [ngValue]="typeOption">{{typeOption}}</option>
+                  </select>
+                  <app-err-msg [name]="'type'" [form]="feedbackForm"
+                               [errMsg]="'Please enter the type of feedback!'"></app-err-msg>
+                </div>
+              </div>
+              <div class="row"
+                   *ngIf="feedbackForm.get('type').value !== 'Blog' && feedbackForm.get('type').value !== 'Forum'">
+                <div class="form-group col-xs-12 col-md-10">
+                  <label>Describe</label>
+                  <textarea class="form-control" name="description" formControlName="description"
+                            placeholder="Be precise" required></textarea>
+                  <app-err-msg [name]="'description'" [form]="feedbackForm"
+                               [errMsg]="'Please enter your detailed feedback!'" [errType]="'required'"></app-err-msg>
+                  <app-err-msg [name]="'description'" [form]="feedbackForm"
+                               [errMsg]="'Please type something meaningful!'" [errType]="'minlength'"></app-err-msg>
+                </div>
+              </div>
+              <div class="row"
+                   *ngIf="feedbackForm.get('type').value === 'Blog' || feedbackForm.get('type').value === 'Forum'">
+                <div class="form-group col-xs-12 col-md-10">
+                  <label>Url to the Post</label>
+                  <input type="text" class="form-control" name="url" formControlName="url"
+                         placeholder="http://some-forum/xyz" required/>
+                  <app-err-msg [name]="'url'" [form]="feedbackForm" [errMsg]="'Please enter the url of the blog/forum.'"
+                               [errType]="'required'"></app-err-msg>
+                  <app-err-msg [name]="'url'" [form]="feedbackForm" [errMsg]="'Please enter a valid url.'"
+                               [errType]="'pattern'"></app-err-msg>
+                </div>
+              </div>
+              <app-radio-btn-group [form]="feedbackForm" [name]="'mood'" [label]="'Your Mood/Urgency'"
+                                   [radioOptions]="radioOptions.mood" [break]="true"></app-radio-btn-group>
+
+              <button class="btn btn-dark-ice" (click)="sendFeedback()">Send Feedback</button>
+
+            </form>
+          </article>
+        </div>
+      </div>
+      <em>* Time depending on the quality</em>
+      <em>** We respect your privacy, no IPs or private information about you is stored, we identify you with your
+        raspberrypi harware id.</em>
+    </main>
+
+  </div>
+</div>

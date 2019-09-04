@@ -1,0 +1,8 @@
+<section class="controllers container-fluid" [hidden]="chamberCycle == 'drying'">
+  <div class="row">
+    <div class="col-lg-4">
+      <h3>Lights</h3>
+    </div>
+  </div>
+  <app-input-rule [chamberForm]="chamberForm" [ruleDevice]="'light'"></app-input-rule>
+</section>

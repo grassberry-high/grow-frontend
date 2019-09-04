@@ -1,0 +1,38 @@
+<div>
+  <nav class="navbar navbar-expand-lg navbar-black bg-dark">
+    <div class="container">
+      <a class="navbar-brand" ngbTooltip="Serial: {{getSerial()}}" placement="bottom" href="#">Grassberry High</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarNavDropdown" class="navbar-collapse collapse">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item not-connected" ngbTooltip="Connect your Grassberry High to use additional services."
+              placement="bottom" [hidden]="lastConnect"><span class="text-red">Wifi not connected!</span></li>
+          <li class="nav-item"><a routerLink="/dashboard">Dashboard</a></li>
+          <li class="nav-item" ngbDropdown>
+            <a ngbDropdownToggle id="setup-dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setup
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="setup-dropdown">
+              <li class="dropdown-item"><a routerLink="/general">General Setup (Wifi, Date)</a></li>
+              <li class="dropdown-item"><a routerLink="/quick">Quick Setup</a></li>
+              <li class="dropdown-item"><a routerLink="/advanced">Advanced Setup</a></li>
+              <li class="dropdown-item"><a routerLink="/sensor">Sensor Setup</a></li>
+              <li class="dropdown-item"><a class="text-red" href="" ng-click="reboot()">Reboot</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="flag patreon">
+    <a href="https://patreon.com/grassberry" target="_blank">SUPPORT THE PROJECT</a>
+  </div>
+  <div class="flag beta" ng-show="showFeedback()">
+    <a routerLink="/feedback">BETA - GIVE FEEDBACK</a>
+  </div>
+</div>

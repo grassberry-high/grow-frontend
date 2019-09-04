@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-xs-6 col-sm-6">
+    <div class="form-group required">
+      <label class="control-label" [for]="id">{{label}}</label>
+      <select class="form-control" [ngClass]="class" [name]="relaySelector" [formControl]="relay">
+        <option *ngFor="let relayOption of relayOptions" [ngValue]="relayOption._id">{{relayOption.label}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group col-xs-6 col-sm-6" *ngIf="relay.value">
+    <label>Rename Relay</label>
+    <input type="text" class="form-control" [ngClass]="class" [formControl]="name" [placeholder]="placeholder"
+           (keyup)="debouncedRename(this.relay.value, this.name.value)"/>
+  </div>
+</div>
+
+
+
+

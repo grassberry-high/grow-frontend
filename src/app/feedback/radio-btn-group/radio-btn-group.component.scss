@@ -1,0 +1,54 @@
+@import '~src/app/styles/_load_order.scss';
+
+$label-width: 150px;
+
+input {
+  position: absolute;
+  opacity: 0;
+}
+
+label.btn-primary {
+  color: #fff;
+  background-color: white;
+  border: 1px solid #dddddd;
+  padding: 0.5rem 0.75rem;
+
+  &:nth-of-type(1) {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+  }
+
+  &:nth-last-of-type(1) {
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+
+  &.btn-primary:not(:disabled):not(.disabled).active {
+    background: $dark-ice;
+    border-color: darken($dark-ice, 10%);
+  }
+}
+
+.indent-other {
+  margin-left: $label-width + 4px;
+}
+
+.other-inline {
+  display: inline-block;
+
+  .indent-other {
+    margin-left: 1rem;
+  }
+}
+
+.other-input {
+  padding-left: 0;
+
+  &:not(.indent-other) {
+    margin-left: 15px;
+  }
+}
+
+br + .btn-group {
+  margin-left: 15px;
+}

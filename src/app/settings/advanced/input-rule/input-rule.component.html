@@ -1,0 +1,192 @@
+<form [formGroup]="chamberForm">
+  <article class="row controller" *ngFor="let rule of rules.controls; let index = index" formArrayName="rules"
+           [ngClass]="{ 'notActive': isSensorBased(rule.trigger) && filterDetectors(detectorFilter).length == 0 }">
+    <div *ngIf="rule.value.device === ruleDevice" [formGroupName]="index" class="col-xs-12 col-sm-12">
+      <fieldset [ngClass]="{'light-orange': ruleDevice === 'light', 'lighter-grey': ruleDevice === 'fan'}">
+
+
+        <!-- delete a rule -->
+        <div class="row">
+          <p class="col-xs-12 col-sm-12 remove">
+            <fa-icon ngbTooltip="Remove/Clear" icon="trash" (click)="removeRule(index)"></fa-icon>
+          </p>
+        </div>
+
+        <!-- sensor based rules will show a sensor selector -->
+        <div class="row" *ngIf="isSensorBased(rule.value.trigger) === true">
+          <div class="col-xs-12 col-sm-12 col-md-8">
+            <app-input-sensor [rule]="rule" [class]="{'tutorial-step': index == 0}"
+                              [nameSelector]="'rule-sensor-id'"></app-input-sensor>
+            <app-err-msg [name]="'sensor'" [form]="rule" [errMsg]="'Please specify the probe.'"></app-err-msg>
+          </div>
+        </div>
+
+        <!-- time based rules will show time options -->
+        <div class="row" *ngIf="rule.get('trigger').value==='timeOnOff'">
+          <div class="form-group required col-lg-2" name="start-time">
+            <label class="control-label">Start Time</label>
+            <input type="hidden" class="tutorial-step" name="start-time-input"/>
+            <input formControlName="startTime" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Start Time"
+                   class="form-control">
+            <owl-date-time #dt1 [pickerType]="'timer'" [stepHour]="timepickerConfig.hourStep"
+                           [stepMinute]="timepickerConfig.minuteStep"></owl-date-time>
+            <app-err-msg [name]="'startTime'" [form]="rule" [errMsg]="'Please specify the start time.'"></app-err-msg>
+          </div>
+          <div class="form-group required col-lg-2">
+            <label class="control-label">Duration in hours</label>
+            <input type="text" class="form-control tutorial-step" name="duration" formControlName="durationHOn"
+                   placeholder="18"/>
+            <app-err-msg [form]="rule" [name]="'durationHOn'"
+                         [errMsg]="'Please specify the duration (hours) you want to keep the relay on.'"></app-err-msg>
+          </div>
+        </div>
+
+        <!-- interval -->
+        <div class="row" *ngIf="rule.get('trigger').value === 'interval'">
+          <div class="form-group required col-lg-2">
+            <label class="control-label">Interval</label>
+            <select class="form-control" name="time-on" formControlName="onPattern">
+              <option *ngFor="let cronPatternOption of cronPatternOptions"
+                      [value]="cronPatternOption.pattern">{{ cronPatternOption.name }}</option>
+            </select>
+            <app-err-msg [form]="rule" [name]="'onPattern'" [errMsg]="'Please specify an interval.'"></app-err-msg>
+          </div>
+          <div formGroupName="durationHelper" class="col-lg-4">
+            <div class="row">
+              <div class="col-lg-6 form-group">
+                <label>Time on value</label>
+                <input type="text" class="form-control tutorial-step" name="rule-value" formControlName="durationOn"
+                       placeholder="50"/>
+                <i *ngIf="rule.get('durationMSOn').value">{{rule.get('durationMSOn').value}} (ms)</i>
+              </div>
+              <div class="col-lg-6 form-group">
+                <label class="control-label">Time on unit</label>
+                <select class="form-control" name="time-on" formControlName="timeUnit">
+                  <option *ngFor="let timeUnitOption of timeUnitOptions"
+                          [value]="timeUnitOption.multiplierToMs">{{ timeUnitOption.name }}</option>
+                </select>
+              </div>
+            </div>
+            <p
+              *ngIf="rule.get('durationHelper').errors && (rule.get('durationHelper').get('durationOn').touched || rule.get('durationHelper').get('durationOn').dirty) && (rule.get('durationHelper').get('timeUnit').touched || rule.get('durationHelper').get('timeUnit').dirty)"
+              class="err-msg">
+              Please specify the time on value and unit
+            </p>
+          </div>
+        </div>
+
+        <!-- Threshold on/off rules go on on a threshold and off on a threshold (or vice versa) -->
+        <div class="row" *ngIf="rule.value.trigger === 'thresholdOnOff'">
+          <div class="form-group required col-lg-2">
+            <label class="control-label">On-Value <span
+              *ngIf="rule && rule.value.forDetector && unitOptions[rule.value.forDetector]">({{unitOptions[rule.value.forDetector]}}
+              )</span></label>
+            <input type="text" class="form-control tutorial-step" name="rule-value" formControlName="onValue"
+                   placeholder="50"/>
+            <app-err-msg [form]="rule" [name]="'onValue'"
+                         [errMsg]="'Please specify an \'on\' threshold.'"></app-err-msg>
+          </div>
+          <div class="form-group required col-lg-2">
+            <label class="control-label">Off-Value <span
+              *ngIf="rule && rule.value.forDetector && unitOptions[rule.value.forDetector]">({{unitOptions[rule.value.forDetector]}}
+              )</span></label>
+            <input type="text" class="form-control tutorial-step" name="rule-value" formControlName="offValue"
+                   placeholder="50"/>
+            <app-err-msg [form]="rule" [name]="'onValue'"
+                         [errMsg]="'Please specify an \'off\' threshold.'"></app-err-msg>
+          </div>
+        </div>
+
+        <!-- Threshold timed rules go on on a threshold and off after a times span -->
+        <div class="row" *ngIf="rule.value.trigger === 'thresholdTimer'">
+          <div class="form-group required col-lg-2">
+            <label class="control-label">On-Value</label>
+            <select class="form-control" name="time-on" formControlName="onValue">
+              <option *ngFor="let waterOption of waterOptions"
+                      [ngValue]="waterOption.value">{{waterOption.name}}</option>
+            </select>
+            <app-err-msg [form]="rule" [name]="'onValue'"
+                         [errMsg]="'Please specify an \'on\' condition.'"></app-err-msg>
+          </div>
+          <div class="form-group required col-lg-4">
+            <label class="control-label">Duration in milliseconds
+              <fa-icon [icon]="'exclamation-triangle'" class="text-red"
+                       ngbTooltip="There can be a tolerance of +150ms if the device is busy."></fa-icon>
+            </label>
+            <input type="text" class="form-control tutorial-step" name="water-duration" formControlName="durationMSOn"
+                   placeholder="18" required/>
+            <app-err-msg [form]="rule" [name]="'onValue'"
+                         [errMsg]="'Please specify the duration in milliseconds.'"></app-err-msg>
+          </div>
+          <div class="form-group required col-lg-4">
+            <label class="control-label">Blocked for time
+              <fa-icon [icon]="'info-circle'"
+                       ngbTooltip="For safety reasons the trigger is blocked for a certain time to allow the water to soak into the medium."></fa-icon>
+            </label>
+            <select class="form-control tutorial-step" name="water-sensor-blocked-till"
+                    formControlName="durationMBlocked" (ngModelChange)="refreshSensor(rule)">
+              <option *ngFor="let blockedTillOption of blockedTillOptions"
+                      [ngValue]="blockedTillOption.value">{{blockedTillOption.label}}</option>
+            </select>
+            <app-err-msg [form]="rule" [name]="'onValue'"
+                         [errMsg]="'Please specify how long the pump is blocked.'"></app-err-msg>
+          </div>
+          <div class="form-group col-lg-2">
+            <label>Night Off
+              <fa-icon [icon]="'info-circle'" ngbTooltip="Keep pumps off between 22:00-10:00."></fa-icon>
+            </label>
+            <input type="checkbox" class="form-control tutorial-step" name="water-night-mode"
+                   formControlName="nightOff"/>
+          </div>
+        </div>
+
+        <!-- Threshold block, turn off a device after a threshold is passed and emit an error -->
+        <div class="row" *ngIf="rule.value.trigger === 'thresholdBlock'">
+          <div class="form-group required col-lg-2">
+            <label class="control-label">Off-Value</label>
+            <input type="text" class="form-control tutorial-step" name="rule-value" formControlName="offValue"
+                   placeholder="50" required/>
+          </div>
+        </div>
+
+        <!-- Always on rule: triggers at app start -->
+        <div class="row" *ngIf="rule.value.trigger === 'alwaysOn'">
+          <div class="form-group col-lg-2">
+            <label>Always on</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-8">
+            <app-input-relay *ngIf="rule.get('relay')" [label]="capitalizeFirstletter(ruleDevice) + 'Relay'"
+                             [class]="'tutorial-step'" [relay]="rule.get('relay')"
+                             [placeholder]="placeholder"></app-input-relay>
+            <app-err-msg [form]="rule" [name]="'relay'" [errMsg]="'Please specify the relay to switch.'"></app-err-msg>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12">
+            <button class="btn btn-dark-ice tutorial-step" name="btn-copy-rule" (click)="addNewRule(rule)">Copy this
+              rule
+            </button>
+            <hr/>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </article>
+</form>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <fieldset [ngClass]="{'light-orange': ruleDevice === 'light', 'lighter-grey': ruleDevice === 'fan'}">
+      <h3>Add more {{ruleDevice}}s to this chamber</h3>
+      <div class="rules-btn-group">
+        <button type="button" *ngFor="let newRuleBtn of filterBtns()" class="btn btn-dark-ice tutorial-step" [class.beta]="newRuleBtn.beta"
+                [name]="newRuleBtn.name" ngbTooltip="{{newRuleBtn.tooltip}}" [placement]="'bottom'"
+                (click)="addNewRule(ruleDevice, newRuleBtn.trigger)" [disabled]="newRuleBtn.beta">{{newRuleBtn.btnText}}</button>
+        <hr/>
+      </div>
+    </fieldset>
+  </div>
+</div>

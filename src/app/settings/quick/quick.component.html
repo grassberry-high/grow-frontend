@@ -1,0 +1,78 @@
+<div class="quick container-last">
+  <div class="background-image"></div>
+
+  <div class="coming-soon">Coming soon</div>
+
+
+  <section class="container bg-white round-card">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>Important notice</h1>
+        <p>Quick setup is still under development. Please help us to define relevant setups: <a
+          href="https://www.reddit.com/r/GassberryHigh/comments/9kehys/quick_setup/" target="_blank">Reddit</a></p>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="container bg-white round-card mat-app-background">
+    <div class="row">
+      <div class="card-wrapper">
+        <mat-card>
+          <div class="image-wrapper text-center quick-basic">
+            <img [src]="imagePaths.basic" class="mat-card-image" alt="Washed Out">
+          </div>
+          <mat-card-title>
+            <span class="md-headline">Basic Chamber</span>
+          </mat-card-title>
+          <mat-card-content>
+            <p>
+              The basic chamber uses the following outlets:
+            </p>
+            <ol>
+              <li>Lamp</li>
+              <li>Industry fan</li>
+              <li>Rotating fan</li>
+              <li>Water pump</li>
+            </ol>
+          </mat-card-content>
+          <div>
+            <mat-card-actions (click)="addChamber()">Clone & Mother</mat-card-actions>
+            <mat-card-actions (click)="addChamber()">Vegetation</mat-card-actions>
+            <mat-card-actions (click)="addChamber()">Bloom</mat-card-actions>
+            <mat-card-actions (click)="addChamber()">Dry</mat-card-actions>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div class="image-wrapper text-center quick-basic">
+            <img [src]="imagePaths.advanced" class="mat-card-image" alt="Washed Out">
+          </div>
+          <mat-card-title>
+            <span class="md-headline">Advanced Chamber</span>
+          </mat-card-title>
+          <mat-card-content>
+            <p>
+              The basic chamber uses the following outlets:
+            </p>
+            <ol>
+              <li>Lamp</li>
+              <li>Industry fan</li>
+              <li>Rotating fan</li>
+              <li>Water pump</li>
+              <li>Heater</li>
+              <li>Light Mover</li>
+              <li>CO2 Valve</li>
+              <li>Humiditor</li>
+            </ol>
+          </mat-card-content>
+          <div>
+            <mat-card-actions (click)="addChamber()">Clone & Mother</mat-card-actions>
+            <mat-card-actions (click)="addChamber()">Vegetation</mat-card-actions>
+            <mat-card-actions (click)="addChamber()">Bloom</mat-card-actions>
+            <mat-card-actions (click)="addChamber()">Dry</mat-card-actions>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </section>
+</div>

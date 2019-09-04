@@ -1,0 +1,129 @@
+<div class="sensor container-last">
+  <div class="background-image"></div>
+
+  <section class="container bg-white round-card">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <h3>Sensor Settings</h3>
+        <p>You can add sensors to the system, these sensors can be selected in the advanced setup.</p>
+        <p></p>
+      </div>
+    </div>
+  </section>
+
+  <form [formGroup]="sensorsForm">
+    <section class="container bg-white round-card" *ngFor="let sensor of sensors.controls; let index = index"
+             formArrayName="sensors">
+      <div [formGroupName]="index">
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12">
+            <h3 class="float-left">Sensor</h3>
+            <p class="remove">
+              <fa-icon ngbTooltip="Remove/Clear" icon="trash" (click)="removeSensor(index)"></fa-icon>
+            </p>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="developmentMode">
+          <div class="col-xs-12 col-sm-12">
+            <pre>{{sensor}}</pre>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group required col-lg-4">
+            <label class="control-label">Technology</label>
+            <select class="form-control" [ngClass]="class" [name]="technology" [formControlName]="'technology'">
+              <option *ngFor="let technologyOption of technologyOptions"
+                      [ngValue]="technologyOption.shortName">{{technologyOption.longName}}</option>
+            </select>
+            <app-err-msg [name]="'technology'" [form]="sensor" [errMsg]="'Please select a technology.'"></app-err-msg>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="sensor.get('technology')">
+          <div class="form-group required col-lg-4">
+            <label class="control-label">Model</label>
+            <select class="form-control" [ngClass]="class" name="model" [formControlName]="'model'">
+              <option *ngFor="let modelOption of modelOptions[sensor.get('technology').value]"
+                      [ngValue]="modelOption">{{modelOption}}</option>
+            </select>
+            <div class="image-wrapper">
+              <img *ngIf="images[sensor.get('model').value]"
+                   [src]="'assets/images/sensor/' + images[sensor.get('model').value]"/>
+            </div>
+            <app-err-msg [name]="'model'" [form]="sensor"
+                         [errMsg]="'Please specify a model for your sensor.'"></app-err-msg>
+          </div>
+        </div>
+
+        <!-- BLE Setting -->
+        <div class="row" *ngIf="sensor.get('technology').value === 'ble' ">
+          <div class="form-group required col-lg-4">
+            <label class="control-label">UUID</label>
+            <input type="text" class="form-control" name="uuid" formControlName="uuid" placeholder="UUID"/>
+            <app-err-msg [name]="'uuid'" [form]="sensor"
+                         [errMsg]="'Please enter the uuid for your sensor.'"></app-err-msg>
+          </div>
+        </div>
+
+        <!-- I2C Setting -->
+        <div class="row" *ngIf="sensor.get('technology').value === 'i2c' ">
+          <div class="form-group required col-lg-4">
+            <label class="control-label">I2C-Adress</label>
+            <p><em><a href="http://blog.grassberry-high.com/build-your-own-grassberry-high/#232jumpers" target="_blank">How
+              do I know the address?</a></em>
+            <p>
+              <input type="text" class="form-control" name="address" formControlName="address" placeholder="Adress"/>
+              <app-err-msg [name]="'address'" [form]="sensor"
+                           [errMsg]="'Please enter the address for your sensor.'"></app-err-msg>
+          </div>
+        </div>
+
+        <!-- Detectors -->
+        <app-input-detectors *ngIf="sensor.get('model').value" [sensor]="sensor"></app-input-detectors>
+
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12">
+            <button class="btn btn-dark-ice" [disabled]=" buttonDisabled === true " (click)="onSubmit(index)">Save
+              Sensor Settings
+            </button>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="sensor.get('_id').value">
+          <div class="col-xs-12 col-sm-12">
+            <a class="clickable" [href]="exportSensorGetFile(sensor.value)"
+               [download]="exportSensorGetName(sensor.value)">Export</a>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+  </form>
+
+  <section class="container bg-white round-card">
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <button class="btn btn-dark-ice" (click)="addSensor(sensors)">Add new sensor</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <div class="import">
+          <label for="import">
+            <span class="btn btn-dark-ice"><i class="fas fa-cloud-upload"></i>Import</span>
+          </label>
+          <input type="file" id="import" class="btn btn-dark-ice" name="file" (change)="fileChanged($event)"
+                 label="Import"/>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

@@ -1,0 +1,35 @@
+{
+  "detectorTypes": [
+    "water"
+  ],
+  "options": {
+    "title": {
+      "text": "Chirp"
+    },
+    "scales": {
+      "yAxes": [
+        {
+          "scaleLabel": {
+            "labelString": "Moisture/Water",
+            "display": true,
+            "fontColor": "a2b6c4"
+          }
+        }
+      ]
+    },
+    "datasetOverride": [
+      {
+        "yAxisID": "y-axis-1",
+        "pointBackgroundColor": "rgba(162,182,196,0.5)",
+        "borderColor": "#a2b6c4",
+        "backgroundColor": "rgba(162,182,196,0.2)"
+      }
+    ]
+  },
+  "colors": {
+    "water": {
+      "backgroundColor": "rgba(0,0,200,0.5)",
+      "borderColor": "rgba(0,0,200,1)"
+    }
+  }
+}

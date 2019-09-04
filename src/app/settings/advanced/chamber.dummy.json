@@ -1,0 +1,58 @@
+{
+  "_id": "",
+  "name": "Bloom",
+  "cycle": "vegetation",
+  "strains": [
+    {
+      "name": "AK47"
+    }
+  ],
+  "rules": [
+    {
+      "relay": "588a427d617fff11d79b304e",
+      "device": "light",
+      "trigger": "timeOnOff",
+      "startTime": "2019-08-27T08:53:13.646Z",
+      "durationHOn": "12",
+      "durationHelper": {
+        "durationOn": null,
+        "timeUnit": null
+      }
+    },
+    {
+      "relay": "588a427d617fff11d79b304f",
+      "device": "fan",
+      "trigger": "interval",
+      "durationMSOn": 60000,
+      "durationHelper": {
+        "durationOn": "1",
+        "timeUnit": "60000"
+      },
+      "onPattern": "* */15 * * * *"
+    },
+    {
+      "relay": "588a427d617fff11d79b3051",
+      "device": "pump",
+      "trigger": "interval",
+      "durationMSOn": 60000,
+      "durationHelper": {
+        "durationOn": "1",
+        "timeUnit": "60000"
+      },
+      "onValue": 2,
+      "onPattern": "* * */1 * * *"
+    },
+    {
+      "relay": "588a427d617fff11d79b3050",
+      "sensor": {
+        "_id": "588a427d617fff11d79b304a"
+      },
+      "device": "fan",
+      "forDetector": "temperature",
+      "detectorId": "5bc45695d557b57ae40e94fe",
+      "trigger": "thresholdOnOff",
+      "onValue": "30",
+      "offValue": "25"
+    }
+  ]
+}

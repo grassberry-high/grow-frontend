@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <h3>Detectors</h3>
+  </div>
+</div>
+
+<div class="row">
+  <form [formGroup]="sensor">
+    <fieldset class="col-xs-12 col-sm-12 light-green detector-form" formArrayName="detectors"
+              *ngFor="let detector of sensor.get('detectors').controls; let index = index">
+      <div [formGroupName]="index">
+        <pre *ngIf="developmentMode">{{detector}}</pre>
+        <div class="row">
+          <div class="form-group col-lg-8">
+            <h4 class="float-left">{{detector.get('name').value}}</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group required col-lg-4">
+            <label class="control-label">Type</label>
+            <select class="form-control" [ngClass]="class" name="type" formControlName="type">
+              <option *ngFor="let typeOption of typeOptions[sensor.get('model').value]"
+                      [ngValue]="typeOption.shortName">{{typeOption.longName}}</option>
+            </select>
+            <app-err-msg [name]="'type'" [form]="detector"
+                         [errMsg]="'Please enter the type for your sensor.'"></app-err-msg>
+          </div>
+          <div class="form-group required col-lg-4">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" name="name" formControlName="name" placeholder="Name"/>
+            <app-err-msg [name]="'name'" [form]="detector"
+                         [errMsg]="'Please enter the name for your sensor.'"></app-err-msg>
+          </div>
+          <div class="form-group required col-lg-4">
+            <label class="control-label">Unit</label>
+            <select *ngIf="unitOptions[detector.get('type').value]" class="form-control" [ngClass]="class" name="type"
+                    formControlName="unit">
+              <option *ngFor="let unitOption of unitOptions[detector.get('type').value]"
+                      [ngValue]="unitOption.shortName">{{unitOption.longName}}</option>
+            </select>
+            <app-err-msg [name]="'unit'" [form]="detector"
+                         [errMsg]="'Please enter the unit for your sensor.'"></app-err-msg>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>

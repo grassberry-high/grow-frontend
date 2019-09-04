@@ -1,0 +1,52 @@
+{
+  "detectorTypes": [
+    "temperature",
+    "humidity"
+  ],
+  "type": "line",
+  "options": {
+    "title": {
+      "text": "HDC1000"
+    },
+    "scales": {
+      "yAxes": [
+        {
+          "scaleLabel": {
+            "labelString": "Temperature",
+            "display": true,
+            "fontColor": "red"
+          }
+        },
+        {
+          "scaleLabel": {
+            "labelString": "Humidity",
+            "display": true,
+            "fontColor": "rgba(0,133,249,1)"
+          },
+          "id": "y-axis-2",
+          "type": "linear",
+          "display": true,
+          "position": "right",
+          "fontColor": "blue",
+          "ticks": {
+            "min": 0
+          }
+        }
+      ]
+    }
+  },
+  "colors": {
+    "temperature": {
+      "backgroundColor": [
+        "#ffd0d0"
+      ],
+      "borderColor": [
+        "#ff9898"
+      ]
+    },
+    "humidity": {
+      "backgroundColor": "#f0f8ff",
+      "borderColor": "#2a87f9"
+    }
+  }
+}

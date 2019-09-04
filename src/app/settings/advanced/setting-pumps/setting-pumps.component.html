@@ -1,0 +1,15 @@
+<section class="watering container-fluid" [hidden]="cycle === 'drying'">
+  <div class="row">
+    <div class="col-lg-4">
+      <h3>Watering</h3>
+    </div>
+  </div>
+  <article class="row water" [hidden]="filterDetectors(['water']).length > 0">
+    <fieldset class="col-xs-12 col-sm-12 light-pink no-sensor">
+      <p><strong>No water sensor has been detected. Please assure that all sensors are plugged in correctly.</strong>
+      </p>
+    </fieldset>
+  </article>
+  <app-input-rule [chamberForm]="chamberForm" [ruleDevice]="'pump'"
+                  placeholder="'e.g. Air circulation (Left)'"></app-input-rule>
+</section>

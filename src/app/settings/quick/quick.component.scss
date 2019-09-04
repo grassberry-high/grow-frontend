@@ -1,0 +1,29 @@
+.quick {
+  .quick-basic {
+    margin-top: 1.5rem;
+  }
+
+  .card-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-around;
+  }
+
+  .mat-card-actions {
+    background-color: aliceblue;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken(aliceblue, 20%)
+    }
+
+  }
+
+  .mat-card-content, .mat-card-subtitle {
+    font-family: 'Lato', sans-serif;
+  }
+}

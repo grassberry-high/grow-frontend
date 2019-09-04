@@ -1,0 +1,25 @@
+<section class="container bg-white round-card">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <h3>
+        The following sensors / controllers have been detected:</h3>
+    </div>
+    <div class="col-xs-12 col-sm-12">
+      <ul>
+        <li *ngFor="let activeDevice of activeDevices">
+          <span *ngIf="activeDevice.type == 'sensor'"><fa-icon icon="vial"></fa-icon>
+            {{activeDevice.model}} ({{activeDevice.address}})</span>
+          <span *ngIf="activeDevice.type == 'relay'"><fa-icon icon="plug"></fa-icon>
+            {{activeDevice.name}} ({{activeDevice.address}})
+              <ul>
+                <li *ngFor="let relay of relays">{{relay.name}} {{relay.label}}
+                  <span class="clickable text-blue" (click)="operateRelay(relay)"><fa-icon
+                    icon="{{relay.state == true ? 'toggle-on' : 'toggle-off'}}"></fa-icon></span>
+                </li>
+              </ul>
+            </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+<div class="container-last dashboard">
+  <div class="background-image"></div>
+  <section class="container bg-white round-card" *ngIf="chambers.length === 0 && loaded === true">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-sm-12 col-md-12">
+        <h2>No chambers configured</h2>
+        <button class="btn btn-dark-ice" routerLink="/advanced">Go to Advanced Setup</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="container bg-white round-card" *ngFor="let chamber of chambers">
+    <!-- GENERAL GROW INFORMATION -->
+    <article class="general-grow">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-sm-12 col-md-12">
+          <h2>{{chamber.name}}</h2>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-sm-12 col-md-4 col-lg-4" *ngIf="!chamber.hidden">
+          <div>
+            <label>Cycle</label>
+            <p>{{chamber.cycle}}</p>
+          </div>
+          <div *ngFor="let light of chamber.lights">
+            <p>{{light.durationHOn}}h starting at {{light.startTime | date: 'HH:mm' }}</p>
+            <app-light-percentage [light]="light" ></app-light-percentage>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="chamber.strains.length > 0">
+        <div class="col-xs-12 col-sm-12 col-sm-12 col-md-4 col-lg-2">
+          <label>{{ chamber.strains.length | i18nPlural: itemPluralMapping['strain'] }}</label>
+          <ul>
+            <li *ngFor="let strain of chamber.strains"><a ng-href="strain | leafly">{{strain.name}}</a></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <app-dashboard-charts [chamberName]="chamber.name" [activeSensors]="chamber.activeSensors"></app-dashboard-charts>
+
+    <app-dashboard-relays [relays]="chamber.allRelays"></app-dashboard-relays>
+
+    <app-dashboard-events [relays]="chamber.allRelays"></app-dashboard-events>
+
+    <pre *ngIf="developer" id="default-spacing">{{ chamber | json }}</pre>
+  </section>
+
+  <app-devices [activeDevices]="activeDevices"></app-devices>
+</div>

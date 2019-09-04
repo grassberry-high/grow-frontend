@@ -1,0 +1,14 @@
+DEBUG=server
+NODE_ENV=development
+MONGODB_ADMIN=admin
+MONGODB_URL=mongodb://docker.for.mac.localhost/LOC_manager
+MONGODUMP_DIRECTORY=./mongodumps/
+MAIL_USER=mailer@360-disrupt.de
+MAIL_PASSWORD=m#1lergdhdgsjhgfsv##++*
+MAIL_FROM=VSS_<support-webservice@ordermed.com>
+MAIL_HOST=grus.uberspace.de
+MAIL_PORT=587
+INSTANCE_TYPE=gui
+MUTE_MAILER_ERR=true
+PORT_HTTP=8000
+PORT_HTTPS=443

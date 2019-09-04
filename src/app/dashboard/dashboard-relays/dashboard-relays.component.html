@@ -1,0 +1,10 @@
+<div class="relays-wrapper row" *ngIf="relays && relays.length > 0">
+  <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+    <h2 class="text-uppercase">Relays</h2>
+    <ul class="relays">
+      <li class="relay" [ngClass]="[relay.state ? 'on' : 'off', relay.device]" *ngFor="let relay of relays">
+        <a class="clickable" (click)="operateRelay(relay)">{{relay.name}} - {{relay.state | relayPipe}}</a>
+      </li>
+    </ul>
+  </div>
+</div>

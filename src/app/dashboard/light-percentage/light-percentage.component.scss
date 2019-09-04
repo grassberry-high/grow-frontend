@@ -1,0 +1,23 @@
+@import '~src/app/styles/_load_order.scss';
+
+.part {
+  float: left;
+  text-align: center;
+}
+
+.part:first-child {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.part:last-child {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.on {
+  background-color: $yellow;
+}
+
+.off {
+  background-color: $light-grey;
+}
