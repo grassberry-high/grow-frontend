@@ -37,7 +37,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.checkLicense();
-    this.getSystem();
   }
 
   getSerial() {
@@ -47,9 +46,8 @@ export class HeaderComponent implements OnInit {
   }
 
   checkLicense() {
-    this.systemService.checkLicense().subscribe((system: System) => {
-      this.system = system;
-      this.updateLastConnect();
+    this.systemService.checkLicense().subscribe(() => {
+      this.getSystem();
     });
   }
 
